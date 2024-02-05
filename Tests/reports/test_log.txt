@@ -1,0 +1,28 @@
+INFO:root:Date: 2024-01-25 10:12
+ERROR:root:ERROR: Submitted with letters in phone field: ok
+Traceback (most recent call last):
+  File "c:\QA\selenium_test\Charity-and-Sponsorship-Fund\Tests\test_feedback_form.py", line 25, in <module>
+    assert re.match("^[0-9]+", phone.get_attribute("value")) is not None
+AssertionError
+INFO:root:Element not found
+INFO:root:Name: Test
+INFO:root:Phone: ok
+INFO:root:Email: 1234tes@sd.com
+INFO:root:Element not found
+INFO:root:Name: Test
+INFO:root:Phone: 1234
+INFO:root:Email: 1234
+INFO:root:Date: 2024-01-26 14:38
+ERROR:root:ERROR: Submitted with letters in phone field: ok
+Traceback (most recent call last):
+  File "c:\QA\selenium_test\Charity-and-Sponsorship-Fund\Tests\test_feedback_form.py", line 25, in <module>
+    assert re.match("^[0-9]+", phone.get_attribute("value")) is not None
+AssertionError
+INFO:root:Element not found
+INFO:root:Name: Test
+INFO:root:Phone: ok
+INFO:root:Email: 1234tes@sd.com
+INFO:root:Element not found
+INFO:root:Name: Test
+INFO:root:Phone: 1234
+INFO:root:Email: 1234
