@@ -14,7 +14,7 @@ reports_directory = r'C:\QA\projects\Charity-and-Sponsorship-Fund\reports'
 class BasePage:
     def __init__(self, driver) -> None:
         self.driver = driver
-        # Header and footer cross all pages 
+        # Header and footer cross all pages fdgdfb
         self.header = self.driver.find_element(By.XPATH, '//div[@class="w-section__inner section__inner_16_"]')
         self.footer = self.driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]')
 
