@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-from base_page import *
+from Pages.base_page import *
 from selenium import webdriver
 
 class HomePage(BasePage):
