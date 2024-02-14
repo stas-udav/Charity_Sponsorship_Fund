@@ -17,8 +17,9 @@ class BasePage:
 
     # Header and footer cross all pages 
     def find_header_footer(self):    
-        self.header = self.driver.find_element(By.XPATH, '//div[@class="header w-section--header w-section--no-v-padding"]')
-        self.footer = self.driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]')    
+        header = self.driver.find_element(By.XPATH, '//div[@class="header w-section--header w-section--no-v-padding"]')
+        footer = self.driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]')    
+        return header, footer
     # Create a new browser instance   
     def open(self, url):        
         # Full screen browser    
@@ -38,7 +39,10 @@ class BasePage:
     def loading_check(self):
         wait = WebDriverWait(self.driver, 3)
         wait.until(lambda driver: driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]'))      
-        assert self.driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]'), "Error - page not downloaded"
+        # _, footer = self.find_header_footer()
+        elements = self.driver.find_elements(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]')
+        assert len(elements) == 1, "Error - page not downloaded"
+        # assert self.driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]'), "Error - page not downloaded"
 
     # Payment button
     def donate_button(self):
@@ -49,7 +53,7 @@ class BasePage:
     # Social media icon\links check
     def social_media(self, url):
         # Find all social media icons
-        social_media_icons = driver.find_elements(By.XPATH, "//a[@class='social-icons__icon_1W1']")
+        social_media_icons = self.driver.find_elements(By.XPATH, "//a[@class='social-icons__icon_1W1']")
 
         # Create a list of social media icons
         social_media_list = []
@@ -72,3 +76,10 @@ class BasePage:
         current_url = self.driver.current_url
         assert current_url == "https://warvictimsfund.com/", "expected url https://warvictimsfund.com/, received url {}.".format(current_url)
         print(current_url)
+
+    # Find element
+    def find_element(self, xpath):
+        wait = WebDriverWait(self.driver, 3)
+        wait.until(lambda driver: driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]'))  
+        element = self.driver.find_element(By.XPATH, xpath)
+        return element
