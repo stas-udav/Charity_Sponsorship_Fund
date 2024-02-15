@@ -51,7 +51,7 @@ class BasePage:
         return donate_buttons
     
     # Social media icon\links check
-    def social_media(self, url):
+    def social_media(self):
         # Find all social media icons
         social_media_icons = self.driver.find_elements(By.XPATH, "//a[@class='social-icons__icon_1W1']")
 
@@ -71,7 +71,7 @@ class BasePage:
             json.dump(report_list, json_file) 
 
     # Ensure the logo redirects to the homepage
-    def click_logo(self, url):
+    def click_logo(self):
         self.driver.find_element(By.XPATH, "//img[@class='logo-image_HXE image-logo_cI-']").click()
         current_url = self.driver.current_url
         assert current_url == "https://warvictimsfund.com/", "expected url https://warvictimsfund.com/, received url {}.".format(current_url)

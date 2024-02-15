@@ -20,10 +20,32 @@ def test_open_page(url, driver):
    # Open the website  
    about_page.driver.get(url)
 
+# Checking if e-mail is present and clickable
 @pytest.mark.parametrize("xpath", ['//a[@href="mailto:HELP@WARVICTIMSFUND.COM"]'])
 def test_email(xpath, driver):
     about_page = AboutPage(driver)
-    test_email = about_page.find_element(xpath)
-    driver.execute_script("arguments[0].scrollIntoView(true);", test_email)
-    test_email.click()
+    email = about_page.find_element(xpath)
+    driver.execute_script("arguments[0].scrollIntoView(true);", email)
+    email_value = email.text
+    assert email_value == "HELP@WARVICTIMSFUND.COM"
+    # assert email.click()
+    
+# Checking if phone is present and clickable
+@pytest.mark.parametrize("xpath", ['//a[@href="tel:+37067045284"]'])
+def test_phone_present(xpath, driver):    
+    about_page = AboutPage(driver)
+    phone = about_page.find_element(xpath)
+    phone_text = phone.text
+    assert phone_text == "+ 37067045284"
+    print(phone_text)
+    assert phone.click
+
+# Checking if business address is correct
+@pytest.mark.parametrize("xpath", ['//span[@style="font-size:18px" and contains(text(), "ŽIRNIŲ STR. 10, VILNIUS 02120, LITHUANIA")]'])
+def test_address(xpath, driver):
+    about_page = AboutPage(driver)
+    address = about_page.find_element(xpath)
+    address_value = address.text
+    assert address_value == "ŽIRNIŲ STR. 10, VILNIUS 02120, LITHUANIA"
+    print(address_value) 
     

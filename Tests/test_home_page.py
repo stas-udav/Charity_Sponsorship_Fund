@@ -3,7 +3,8 @@ from selenium import webdriver
 import pytest
 import allure
 
-# Create a new browser instance 
+# Create a new browser instance (fixture "module" used for creating 1 browser
+#                                instance for all test functions)
 @pytest.fixture(scope="module")
 def driver():
     # Setup
@@ -23,20 +24,16 @@ def test_open_page(url, driver):
 @allure.step("loading_check")
 def test_loading_check(driver):
    homepage = HomePage(driver)
-   homepage.loading_check()
+   homepage.loading_check()   
    
-   
-@pytest.mark.parametrize("url", ["https://warvictimsfund.com/"])
 # Ensure the logo redirects to the homepage
-def test_logo_redirect(driver, url):
+def test_logo_redirect(driver):
    homepage = HomePage(driver)
-   homepage.click_logo(url)
-
+   homepage.click_logo()
 
 # Social media icon\links check   
-@pytest.mark.parametrize("url", ["https://warvictimsfund.com/"])
-def test_social_media(driver, url):
+def test_social_media(driver):
    homepage = HomePage(driver)
-   homepage.social_media(url)
+   homepage.social_media()
 
          
