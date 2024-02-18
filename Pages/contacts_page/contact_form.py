@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
-from .Tests.functions import *
-
-class ContactForm:
+# from .Tests.functions import *
+from Pages.base_page import *
+class ContactForm(BasePage):
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     # Submit button method
     def scroll_to_submit(self):   
@@ -33,9 +33,9 @@ class ContactForm:
         #     "email": "johndoe@example.com",
         #     "message": "This is my message",
         #  }
-        self.name_input = find_input_field (driver, "Your Name*", field_data_dict["name"]) 
-        self.phone_input = find_input_field (driver, "Phone number*", field_data_dict["phone"])
-        self.email_input = find_input_field (driver, "Email*", field_data_dict["email"])
-        self.message_input = find_input_field (driver, "Your message", field_data_dict["message"])
+        self.name_input = self.find_input_field ("Your Name*", field_data_dict["name"]) 
+        self.phone_input = self.find_input_field ("Phone number*", field_data_dict["phone"])
+        self.email_input = self.find_input_field ("Email*", field_data_dict["email"])
+        self.message_input = self.find_input_field ("Your message", field_data_dict["message"])
     
         
