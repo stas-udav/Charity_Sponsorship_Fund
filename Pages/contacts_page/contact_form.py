@@ -24,7 +24,7 @@ class ContactForm(BasePage):
         assert self.driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]'), "Error - page not downloaded "
     
     # Send data to the input field
-    def input_field(self, field_data_dict):
+    def input_field(self, xpath):
         # argument it's a dictionary of date for all 
         # field, should be like 
         # input_data = {
@@ -33,9 +33,12 @@ class ContactForm(BasePage):
         #     "email": "johndoe@example.com",
         #     "message": "This is my message",
         #  }
-        self.name_input = self.find_input_field ("Your Name*", field_data_dict["name"]) 
-        self.phone_input = self.find_input_field ("Phone number*", field_data_dict["phone"])
-        self.email_input = self.find_input_field ("Email*", field_data_dict["email"])
-        self.message_input = self.find_input_field ("Your message", field_data_dict["message"])
-    
+        # field_data_dict["message"] - dict input
+        field = self.driver.find_element (By.XPATH, xpath)
+        # name_input_field = self.driver.find_element (By.XPATH, "//input[@placeholder='Your Name*']") 
+        # phone_input_field = self.driver.find_element (By.XPATH,"//input[@placeholder='Phone number*']")
+        # email_input_field = self.driver.find_element (By.XPATH,"//input[@placeholder='Email*']")
+        # message_input_field = self.driver.find_element (By.XPATH,"//textarea[@class='w-form__input w-form__input--textarea ui-input ui-input--size-md']")
+        # return(name_input_field, phone_input_field, email_input_field, message_input_field)
+        return(field)
         
