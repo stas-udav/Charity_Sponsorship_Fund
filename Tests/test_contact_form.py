@@ -17,7 +17,7 @@ def driver():
     yield driver
     # Teardown
     driver.quit()
-
+    
 @pytest.mark.parametrize("url", ["https://warvictimsfund.com/conacts"])
 def test_open_page(url, driver):
    contact_page = ContactForm(driver)
@@ -26,6 +26,7 @@ def test_open_page(url, driver):
    # Open the website  
    contact_page.driver.get(url)
 
+@allure.suite("Contact Form Tests")
 @pytest.mark.parametrize("field_data_dict", [{
         "name": "John Doe",
         "phone": "35353",
@@ -49,38 +50,39 @@ def test_input(field_data_dict, driver):
     contact_page = ContactForm(driver)
     driver.execute_script("window.scrollTo(0, 250);")
     time.sleep(1)    
-    input_name = contact_page.input_field("//input[@placeholder='Your Name*']")
-    input_name.send_keys(Keys.CONTROL + "a")
-    input_name.send_keys(Keys.DELETE)
-    input_name.send_keys(field_data_dict["name"])
-    value_name = input_name.get_attribute("value")
+    with allure.step(f"Input name: {field_data_dict['name']}"):
+        input_name = contact_page.input_field("//input[@placeholder='Your Name*']")
+        input_name.send_keys(Keys.CONTROL + "a")
+        input_name.send_keys(Keys.DELETE)
+        input_name.send_keys(field_data_dict["name"])
+        value_name = input_name.get_attribute("value")
    
-    # Input name field contains letters   
-    allure.attach(driver.get_screenshot_as_png(), name="input_name_field", attachment_type=allure.attachment_type.PNG)
-    assert value_name is not None and re.match(r'\D+', value_name)
+        # Input name field contains letters   
+        allure.attach(driver.get_screenshot_as_png(), name="input_name_field", attachment_type=allure.attachment_type.PNG)
+        assert value_name is not None and re.match(r'\D+', value_name)
     # input_name.clear()   
-   
-    # Input phone field contains digits and/or "+"
-    input_phone = contact_page.input_field("//input[@placeholder='Phone number*']")
-    input_phone.send_keys(Keys.CONTROL + "a")
-    input_phone.send_keys(Keys.DELETE)
-    # input_phone.clear()
-    # WebDriverWait(driver, 3).until(lambda driver: input_phone.get_attribute("value") == "")
-    input_phone.send_keys(field_data_dict["phone"])
-    value_phone = input_phone.get_attribute("value")
-    allure.attach(driver.get_screenshot_as_png(), name="input_phone_field", attachment_type=allure.attachment_type.PNG)
-    assert value_phone == field_data_dict["phone"]    
-    # assert value_phone is not None and re.match(r'^\+?\d+$', value_phone) and not re.search(r'[a-zA-Z]', value_phone), "Phone contains letter or empty"
-   
-    # Input email field contains letters and "@"  
-    email_input = contact_page.find_element ("//input[@placeholder='Email*']")
-    email_input.send_keys(Keys.CONTROL + "a")
-    email_input.send_keys(Keys.DELETE)
-    email_input.send_keys(field_data_dict["email"])
-    email_value = email_input.get_attribute("value")
-    allure.attach(driver.get_screenshot_as_png(), name="email_input_field", attachment_type=allure.attachment_type.PNG)
-    assert email_value is not None and re.match(r'^.+@.+\..+$', email_value), "Error - Email missing '@'"
-    # email_input.clear()
+    with allure.step(f"Input phone: {field_data_dict['phone']}"):
+        # Input phone field contains digits and/or "+"
+        input_phone = contact_page.input_field("//input[@placeholder='Phone number*']")
+        input_phone.send_keys(Keys.CONTROL + "a")
+        input_phone.send_keys(Keys.DELETE)
+        # input_phone.clear()
+        # WebDriverWait(driver, 3).until(lambda driver: input_phone.get_attribute("value") == "")
+        input_phone.send_keys(field_data_dict["phone"])
+        value_phone = input_phone.get_attribute("value")
+        allure.attach(driver.get_screenshot_as_png(), name="input_phone_field", attachment_type=allure.attachment_type.PNG)
+        assert value_phone == field_data_dict["phone"]    
+        # assert value_phone is not None and re.match(r'^\+?\d+$', value_phone) and not re.search(r'[a-zA-Z]', value_phone), "Phone contains letter or empty"
+    with allure.step(f"Input email: {field_data_dict['email']}"):
+        # Input email field contains letters and "@"  
+        email_input = contact_page.find_element ("//input[@placeholder='Email*']")
+        email_input.send_keys(Keys.CONTROL + "a")
+        email_input.send_keys(Keys.DELETE)
+        email_input.send_keys(field_data_dict["email"])
+        email_value = email_input.get_attribute("value")
+        allure.attach(driver.get_screenshot_as_png(), name="email_input_field", attachment_type=allure.attachment_type.PNG)
+        assert email_value is not None and re.match(r'^.+@.+\..+$', email_value), "Error - Email missing '@'"
+        # email_input.clear()
    
     # Input message field
     driver.execute_script("window.scrollTo(0, 250);")    
