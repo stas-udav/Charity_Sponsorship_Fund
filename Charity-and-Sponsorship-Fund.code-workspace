@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../selenium_test/Charity-and-Sponsorship-Fund"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../cat_api"
+		}
+	],
+	"settings": {
+		"CodeGPT.apiKey": "CodeGPT Plus Beta"
+	}
+}
