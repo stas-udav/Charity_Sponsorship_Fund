@@ -7,15 +7,8 @@ import logging
 import re
 import time
 import json
+from Pages.config_charity import *
 
-xpath_header = '//div[@class="header w-section--header w-section--no-v-padding"]'
-xpath_footer = '//section[@class="footer w-section--footer w-section--no-v-padding"]'
-xpath_donate = '//a[@data-component="button"][@href="/donate"]'
-xpath_social_media_icon = "//a[@class='social-icons__icon_1W1']"
-xpath_logo = "//img[@class='logo-image_HXE image-logo_cI-']"
-home_page_link = "https://warvictimsfund.com/"
-
-reports_directory = r'C:\QA\projects\Charity-and-Sponsorship-Fund\reports'
 
 class BasePage:
     def __init__(self, driver) -> None:
@@ -23,8 +16,8 @@ class BasePage:
 
     # Header and footer cross all pages 
     def find_header_footer(self):    
-        header = self.driver.find_element(By.XPATH, '//div[@class="header w-section--header w-section--no-v-padding"]')
-        footer = self.driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]')    
+        header = self.driver.find_element(By.XPATH,xpath_header)
+        footer = self.driver.find_element(By.XPATH, xpath_footer)    
         return header, footer
     # Create a new browser instance   
     def open(self, url):        
@@ -44,22 +37,22 @@ class BasePage:
     # Check if page loaded 
     def loading_check(self):
         wait = WebDriverWait(self.driver, 3)
-        wait.until(lambda driver: driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]'))      
+        wait.until(lambda driver: driver.find_element(By.XPATH, xpath_footer))      
         # _, footer = self.find_header_footer()
-        elements = self.driver.find_elements(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]')
+        elements = self.driver.find_elements(By.XPATH, xpath_footer)
         assert len(elements) == 1, "Error - page not downloaded"
         # assert self.driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]'), "Error - page not downloaded"
 
     # Payment button
     def donate_button(self):
         # Find all payment buttons on the page
-        donate_buttons = self.driver.find_elements(By.XPATH, '//a[@data-component="button"][@href="/donate"]')
+        donate_buttons = self.driver.find_elements(By.XPATH, xpath_donate)
         return donate_buttons
     
     # Social media icon\links check
     def social_media(self):
         # Find all social media icons
-        social_media_icons = self.driver.find_elements(By.XPATH, "//a[@class='social-icons__icon_1W1']")
+        social_media_icons = self.driver.find_elements(By.XPATH, xpath_social_media_icon)
 
         # Create a list of social media icons
         social_media_list = []
@@ -78,14 +71,14 @@ class BasePage:
 
     # Ensure the logo redirects to the homepage
     def click_logo(self):
-        self.driver.find_element(By.XPATH, "//img[@class='logo-image_HXE image-logo_cI-']").click()
+        self.driver.find_element(By.XPATH, xpath_logo).click()
         current_url = self.driver.current_url
-        assert current_url == "https://warvictimsfund.com/", "expected url https://warvictimsfund.com/, received url {}.".format(current_url)
+        assert current_url == home_url, "expected url {}, received url {}.".format(home_url, current_url)
         print(current_url)
 
     # Find element
     def find_element(self, xpath):
         wait = WebDriverWait(self.driver, 3)
-        wait.until(lambda driver: driver.find_element(By.XPATH, '//section[@class="footer w-section--footer w-section--no-v-padding"]'))  
+        wait.until(lambda driver: driver.find_element(By.XPATH, xpath))  
         element = self.driver.find_element(By.XPATH, xpath)
         return element
